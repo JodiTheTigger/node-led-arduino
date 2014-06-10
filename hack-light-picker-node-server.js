@@ -4,7 +4,7 @@ var fs = require('fs')
 
 var server = http.createServer(function(req, res) {
     res.writeHead(200, { 'Content-type': 'text/html'});
-    res.end(fs.readFileSync(__dirname + '/chat.html'));
+    res.end(fs.readFileSync(__dirname + '/hack-light-picker.html'));
 }).listen(8080, function() {
     console.log('Listening at: http://localhost:8080');
 });
