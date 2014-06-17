@@ -2,20 +2,17 @@
 
 var fs = require('fs')
     , http = require('http')
-    , socketio = require('socket.io');
+    , socketio = require('socket.io')
+	, express = require('express');
+	
+var app = express();
 
-// Argh, anonomouse lamdas, now to indent?!
-var server = http.createServer(
-    function(req, res) 
-    {
-        res.writeHead(200, { 'Content-type': 'text/html'});
-        res.end(fs.readFileSync(__dirname + '/hack-light-picker.html'));
-    }).listen(
-        8080, 
-        function() 
-        {
-            console.log('Listening at: http://localhost:8080');
-        });
+app.configure(function(){
+    app.use(express.static(__dirname + '/html'));
+});
+var server = http.createServer(app);
+var io = require('socket.io').listen(server);
+server.listen(8080);
 
 var SerialPort = require("serialport").SerialPort
 var serialPort = new SerialPort(
