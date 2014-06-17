@@ -3,13 +3,16 @@
 var fs = require('fs')
     , http = require('http')
     , socketio = require('socket.io')
-	, express = require('express');
-	
+    , express = require('express');
+    
 var app = express();
 
-app.configure(function(){
-    app.use(express.static(__dirname + '/html'));
-});
+app.configure(
+    function()
+    {
+        app.use(express.static(__dirname + '/html'));
+    });
+    
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
 server.listen(8080);
@@ -48,9 +51,9 @@ socketio.listen(server).on(
             {
                 console.log('Message Received: ', msg);
                 socket.broadcast.emit('message', msg);
-				
-				// No input validation, what could possible go wrong?
-				// Expected format is HTML colour code: #RRGGBB.
+                
+                // No input validation, what could possible go wrong?
+                // Expected format is HTML colour code: #RRGGBB.
                 serialPort.write(msg);
             });
     });
